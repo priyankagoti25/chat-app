@@ -85,7 +85,7 @@ const logout = async (req, res)=> {
         .json({message: "User logged out successfully"})
 }
 
-const updateProfile = async (req, res) => {
+const updateProfilePic = async (req, res) => {
     try {
         if(!req?.file) {
             return res.status(400).json({message: "Profile pic is required"})
@@ -109,4 +109,4 @@ const updateProfile = async (req, res) => {
 
 }
 
-export { signup, login, logout, updateProfile }
+export { signup, login, logout, updateProfilePic }
