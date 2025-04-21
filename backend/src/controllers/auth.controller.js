@@ -109,4 +109,14 @@ const updateProfilePic = async (req, res) => {
 
 }
 
-export { signup, login, logout, updateProfilePic }
+const getUsers = async (req, res) => {
+    try {
+        const loggedInUserId = req?.user?._id
+        const users = await User.find({_id: {$ne: loggedInUserId}}).select("-password -refreshToken")
+        res.status(200).json({data: users})
+    } catch (e) {
+        res.status(500).json({message: "Something went wrong while getting users"})
+    }
+}
+
+export { signup, login, logout, updateProfilePic, getUsers }
