@@ -12,7 +12,7 @@ const generateAccessRefreshToken = async (userId) => {
     return { accessToken, refreshToken }
 }
 const signup = async (req, res)=>{
-    const user = new User({...req.body, email: email.toLowerCase()})
+    const user = new User({...req.body, email: req.body?.email?.toLowerCase()})
     const validationErrors = user.validateSync()
     if(validationErrors){
        return res.status(400).send(formatErrors(validationErrors))
@@ -68,8 +68,45 @@ const login = async (req, res)=>{
     })
 }
 
-const logout = (req, res)=>{
-    res.send("signup route")
+const logout = async (req, res)=> {
+    await User.findByIdAndUpdate(
+        req.user?._id,
+        {
+            $unset: {refreshToken: 1}
+        },
+        {
+            new: true
+        }
+    )
+
+    res.status(200)
+        .clearCookie("accessToken", cookieOption)
+        .clearCookie("refreshToken", cookieOption)
+        .json({message: "User logged out successfully"})
 }
 
-export { signup, login, logout }
+const updateProfile = async (req, res) => {
+    try {
+        if(!req?.file) {
+            return res.status(400).json({message: "Profile pic is required"})
+        }
+
+        const localPath = req.file?.path
+        const profilePic = await uploadOnCloudinary(localPath)
+        const user = await User.findByIdAndUpdate(
+            req.user?._id,
+            {
+                $set: { profilePic : profilePic?.url || "" }
+            },
+            {
+                new: true
+            }
+        ).select("-password -refreshToken")
+        return res.status(200).json({message: "Profile pic updated successfully", user})
+    } catch (e){
+        return res.status(500).json({message: "Something went wrong while updating profile pic"})
+    }
+
+}
+
+export { signup, login, logout, updateProfile }
