@@ -22,8 +22,12 @@ const signup = async (req, res)=>{
         return res.status(400).send({message: "User already exist"})
     }
     const profilePicPath = req?.file?.path
-    const profilePic = await uploadOnCloudinary(profilePicPath)
+    let profilePic
+    if(profilePicPath){
+        profilePic = await uploadOnCloudinary(profilePicPath)
+    }
     user.profilePic = profilePic?.url || ""
+
     await user.save()
     const createdUser = await User.findById(user._id).select("-password")
     if(!createdUser) {
@@ -119,4 +123,12 @@ const getUsers = async (req, res) => {
     }
 }
 
-export { signup, login, logout, updateProfilePic, getUsers }
+const checkAuth = async (req, res) => {
+    try {
+        res.status(200).json({data: req.user})
+    } catch (e) {
+        res.status(500).json({message: "Internal Server Error"})
+    }
+}
+
+export { signup, login, logout, updateProfilePic, getUsers, checkAuth }
