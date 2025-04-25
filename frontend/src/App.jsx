@@ -30,8 +30,8 @@ function App() {
       <Navbar/>
       <Routes>
           {
-              authRoutes.map(({path, component: Component}) => (
-                  <Route path={path} element={
+              authRoutes.map(({path, component: Component}, index) => (
+                  <Route key={index} path={path} element={
                       <AuthProtected>
                         <Component/>
                       </AuthProtected>

@@ -40,7 +40,7 @@ const signup = async (req, res)=>{
     return res.status(201)
         .cookie("accessToken", accessToken, cookieOption)
         .cookie("refreshToken", refreshToken, cookieOption)
-        .json({message:"User registered successfully", data: user})
+        .json({message:"User registered successfully", data: createdUser})
 }
 
 const login = async (req, res)=>{

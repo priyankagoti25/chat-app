@@ -12,7 +12,7 @@ const useAuthStore = create((set)=>({
         set({isCheckingAuth: true})
         try {
             const response = await axiosInstance.get("/auth/check")
-            set({authUser: response.data})
+            set({authUser: response.data.data})
         } catch (error) {
             console.log("Error in check auth", error)
             set({authUser: null})
@@ -24,8 +24,7 @@ const useAuthStore = create((set)=>({
         set({isSigningUp: true})
         try {
             const response = await axiosInstance.post("/auth/signup", payload)
-            console.log('signup response', response)
-            set({authUser: response.data})
+            set({authUser: response.data.data})
             toast.success("Account created successfully")
         } catch (error) {
             toast.error(error.response.data.message)
@@ -40,6 +39,21 @@ const useAuthStore = create((set)=>({
             toast.success("Logged out successfully")
         } catch (error) {
             toast.error(error.response.data.message)
+        }
+    },
+    login: async (payload) => {
+        set({isLoggingIn: true})
+        try {
+            const response = await axiosInstance.post("/auth/login", payload)
+            console.log('login response', response)
+            set({authUser: response.data.data.user})
+            toast.success("Logged in successfully")
+            return true
+        } catch (error) {
+            toast.error(error.response.data.message)
+            return false
+        } finally {
+            set({isLoggingIn: false})
         }
     }
 }))

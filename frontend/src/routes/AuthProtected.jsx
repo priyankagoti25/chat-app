@@ -4,14 +4,15 @@ import {Navigate} from "react-router-dom";
 
 const AuthProtected = (props) => {
     const {authUser, isCheckingAuth} = useAuthStore()
-    if(!isCheckingAuth && !authUser) {
-        return <Navigate to="/login"/>
+    console.log(authUser)
+    if(authUser) {
+        return (
+            <>
+                {props.children}
+            </>
+        )
     }
-    return (
-        <>
-            {props.children}
-        </>
-    );
+    return <Navigate to="/login"/>;
 };
 
 export default AuthProtected;
