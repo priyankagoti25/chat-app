@@ -18,6 +18,17 @@ const useAuthStore = create((set)=>({
         } finally {
             set({isCheckingAuth: false})
         }
+    },
+    signup: async () =>{
+        set({isSigningUp: true})
+        try {
+            const response = await axiosInstance.get("/auth/signup")
+            console.log('signup response', response)
+        } catch (error) {
+            console.log('error-->', error)
+        } finally {
+            set({isSigningUp: false})
+        }
     }
 }))
 

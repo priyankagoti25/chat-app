@@ -1,10 +1,8 @@
 import { Routes, Route} from "react-router-dom";
-import Navbar from "./components/Navbar/index.js";
-import Home from "./pages/Home/index.js";
-import Login from "./pages/auth/Login/index.js";
-import Signup from "./pages/auth/Signup/index.js";
-import Profile from "./pages/auth/Profile/index.js";
-import Settings from "./pages/Settings/index.js";
+import Navbar from "./components/Navbar/index.jsx";
+import Login from "./pages/auth/Login/index.jsx";
+import Signup from "./pages/auth/Signup/index.jsx";
+import Settings from "./pages/Settings/index.jsx";
 import {useAuthStore} from "./store/useAuthStore.js";
 import {useEffect} from "react";
 import {Loader} from "lucide-react";

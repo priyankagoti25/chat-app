@@ -1,5 +1,5 @@
-import Home from "../pages/Home/index.js";
-import Profile from "../pages/auth/Profile/index.js";
+import Home from "../pages/Home/index.jsx";
+import Profile from "../pages/auth/Profile/index.jsx";
 const authRoutes = [
     {
         path: "/",
