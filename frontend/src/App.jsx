@@ -1,4 +1,4 @@
-import { Routes, Route} from "react-router-dom";
+import {Routes, Route, Navigate} from "react-router-dom";
 import Navbar from "./components/Navbar/index.jsx";
 import Login from "./pages/auth/Login/index.jsx";
 import Signup from "./pages/auth/Signup/index.jsx";
@@ -8,6 +8,7 @@ import {useEffect} from "react";
 import {Loader} from "lucide-react";
 import AuthProtected from "./routes/AuthProtected.jsx";
 import {authRoutes} from "./routes/authRoutes.js"
+import {Toaster} from "react-hot-toast";
 
 
 function App() {
@@ -38,10 +39,11 @@ function App() {
               ))
           }
 
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/signup" element={<Signup/>}/>
+        <Route path="/login" element={ !authUser ? <Login/> : <Navigate to="/"/> }/>
+        <Route path="/signup" element={ !authUser ? <Signup/> : <Navigate to="/"/> }/>
         <Route path="/settings" element={<Settings/>}/>
       </Routes>
+        <Toaster/>
     </div>
   )
 }
