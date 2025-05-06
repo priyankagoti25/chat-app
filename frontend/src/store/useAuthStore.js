@@ -45,7 +45,6 @@ const useAuthStore = create((set)=>({
         set({isLoggingIn: true})
         try {
             const response = await axiosInstance.post("/auth/login", payload)
-            console.log('login response', response)
             set({authUser: response.data.data.user})
             toast.success("Logged in successfully")
             return true
@@ -54,6 +53,20 @@ const useAuthStore = create((set)=>({
             return false
         } finally {
             set({isLoggingIn: false})
+        }
+    },
+    updateProfileImage: async (data) => {
+        set({isUpdatingProfile: true})
+        try {
+            const response = await axiosInstance.put("/auth/updateProfilePic", data)
+            set({authUser: response.data.user})
+            toast.success("Profile updated successfully")
+            return true
+        } catch (error) {
+            toast.error(error.message)
+            return false
+        } finally {
+            set({isUpdatingProfile: false})
         }
     }
 }))
