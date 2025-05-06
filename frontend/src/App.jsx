@@ -9,10 +9,11 @@ import {Loader} from "lucide-react";
 import AuthProtected from "./routes/AuthProtected.jsx";
 import {authRoutes} from "./routes/authRoutes.js"
 import {Toaster} from "react-hot-toast";
-
+import {useThemeStore} from "./store/useThemeStore.js";
 
 function App() {
     const {authUser, checkAuth, isCheckingAuth} = useAuthStore()
+    const {theme} = useThemeStore()
 
     useEffect(() => {
         checkAuth()
@@ -26,7 +27,7 @@ function App() {
         )
     }
   return (
-    <div>
+    <div data-theme={theme}>
       <Navbar/>
       <Routes>
           {
