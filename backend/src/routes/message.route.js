@@ -6,6 +6,6 @@ import {upload} from "../middlewares/multer.middleware.js"
 const messageRoute = Router()
 
 messageRoute.route('/:id').get(verifyJWT,getMessages)
-messageRoute.route('/send/:id').get(verifyJWT,upload.single("image"),sendMessage)
+messageRoute.route('/send/:id').post(verifyJWT,upload.single("image"),sendMessage)
 
 export default messageRoute
