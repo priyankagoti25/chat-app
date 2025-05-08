@@ -1,7 +1,7 @@
 import dotenv from "dotenv"
 dotenv.config({path: './.env'})
-import {server} from "./app.js"
 import {connectDB} from "./db/index.js"
+import {server} from "./lib/socket.js";
 
 
 const startServer = async () => {

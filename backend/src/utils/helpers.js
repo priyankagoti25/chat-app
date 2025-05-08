@@ -1,3 +1,4 @@
+import {userSocketMap} from '../lib/socket.js'
 export const formatErrors = (validationErrors) => {
     const formattedErrors = {}
 
@@ -7,3 +8,6 @@ export const formatErrors = (validationErrors) => {
     return {errors: formattedErrors, message: validationErrors._message}
 }
 
+export const getReceiverSocketId = (receiverId) => {
+    return userSocketMap[receiverId]
+}

@@ -1,6 +1,7 @@
 import {Message} from "../models/message.model.js";
 import {uploadOnCloudinary} from "../utils/cloudinary.js";
-
+import {getReceiverSocketId} from "../utils/helpers.js";
+import {io} from '../lib/socket.js'
 const getMessages = async (req, res) => {
     try {
         const { id: userToChatId} = req.params
@@ -41,6 +42,8 @@ const sendMessage = async (req, res) => {
         await newMessage.save()
 
         // todo: real-time functionality will goes here. => socket.io
+        const receiverSocketId = getReceiverSocketId(receiverId)
+        io.to(receiverSocketId).emit("newMessage", newMessage)
 
         res.status(201).json({data: newMessage})
 
