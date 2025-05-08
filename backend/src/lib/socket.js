@@ -1,8 +1,5 @@
 import {Server} from "socket.io";
-import app from "../app.js";
-import http from 'http'
-
-const server = http.createServer(app)
+import {server} from "../app.js"
 
 const io =  new Server(server,{
     cors: {
@@ -17,4 +14,4 @@ io.on("connection", (socket)=>{
     })
 })
 
-export {io, server}
+export {io}
